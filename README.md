@@ -23,3 +23,90 @@
 ### 5. Поиск и фильтрация  
 - Поиск по заголовку и содержимому статей.  
 - Сортировка по популярности и дате.  
+
+# Применение DDD к веб-приложению для ведения блога  
+
+В основе DDD лежит четкое разделение предметной области.  
+
+## Ограниченные контексты  
+
+1. **Контекст аутентификации**  
+   - Отвечает за регистрацию, вход и выход пользователей.  
+   - Управляет учетными записями.  
+
+2. **Контекст управления блогами**  
+   - Обрабатывает создание, редактирование и удаление блогов.  
+   - Связывает авторов с их блогами.  
+
+3. **Контекст управления записями**  
+   - Управляет созданием, редактированием, удалением статей.  
+   - Позволяет загружать изображения и медиафайлы.  
+
+4. **Контекст статистики и аналитики**  
+   - Отвечает за подсчет просмотров, лайков, дизлайков и комментариев.  
+
+5. **Контекст поиска и фильтрации**  
+   - Позволяет искать статьи по заголовку и содержимому.  
+   - Обеспечивает сортировку по популярности и дате.  
+
+## Сущности (Entities) и объекты-значения
+
+### Authentication Context  
+- `User` (Сущность)  
+  - `id: UUID`  
+  - `email: string`  
+  - `password: hashed string`  
+
+### Blog Management Context  
+- `Blog` (Сущность)  
+  - `id: UUID`  
+  - `title: string`  
+  - `description: string`  
+  - `authorId: UUID`  
+
+### Article Management Context  
+- `Article` (Сущность)  
+  - `id: UUID`  
+  - `title: string`  
+  - `content: string`  
+  - `blogId: UUID`  
+  - `authorId: UUID`  
+  - `media: Media[]`  
+
+- `Media` (Value Object)  
+  - `url: string`  
+  - `type: enum (IMAGE, VIDEO)`  
+
+### Analytics Context  
+- `ArticleStats` (Сущность)  
+  - `articleId: UUID`  
+  - `views: int`  
+  - `likes: int`  
+  - `dislikes: int`  
+  - `commentsCount: int`  
+
+### Search & Filtering Context  
+- `SearchQuery` (Value Object)  
+  - `query: string`  
+  - `filters: Filters`  
+
+- `Filters` (Value Object)  
+  - `sortBy: enum (DATE, POPULARITY)`  
+
+## Агрегаты 
+- `Blog` (Агрегат) управляет `Article`.  
+- `Article` (Агрегат) управляет `Media`.  
+- `ArticleStats` (Агрегат) содержит метрики статьи.  
+
+## Сервисы предметной области (Domain Services)  
+- `AuthenticationService` (управляет входом, регистрацией).  
+- `BlogService` (CRUD для блогов).  
+- `ArticleService` (CRUD для статей и медиафайлов).  
+- `AnalyticsService` (расчет статистики).  
+- `SearchService` (поиск и фильтрация).  
+
+## Репозитории (Repositories)  
+- `UserRepository` (хранение пользователей).  
+- `BlogRepository` (хранение блогов).  
+- `ArticleRepository` (хранение статей).  
+- `ArticleStatsRepository` (хранение статистики).  
