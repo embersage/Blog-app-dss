@@ -99,4 +99,20 @@
 ## Репозитории (Repositories)  
 - `UserRepository` (хранение пользователей).   
 - `ArticleRepository` (хранение статей).  
-- `ArticleStatsRepository` (хранение статистики). 
+- `ArticleStatsRepository` (хранение статистики).
+
+# Инструментарий  
+
+## Серверная часть  
+- **Node.js**  
+- **PostgreSQL**  
+- **TypeORM**  
+- **Multer**  
+- **Bcrypt + JSON Web Token**  
+
+## Клиентская часть  
+- **React**  
+- **Redux Toolkit**  
+- **Styled Components**  
+- **Axios**  
+
