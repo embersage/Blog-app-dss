@@ -57,25 +57,16 @@
   - `email: string`  
   - `password: hashed string`  
 
-### Blog Management Context  
-- `Blog` (Сущность)  
-  - `id: UUID`  
-  - `title: string`  
-  - `description: string`  
-  - `authorId: UUID`  
-
-### Article Management Context  
-- `Article` (Сущность)  
-  - `id: UUID`  
-  - `title: string`  
-  - `content: string`  
-  - `blogId: UUID`  
-  - `authorId: UUID`  
-  - `media: Media[]`  
-
-- `Media` (Value Object)  
-  - `url: string`  
-  - `type: enum (IMAGE, VIDEO)`  
+### ArticlePost Management Context  
+- `Post` (Сущность)  
+  - `id`: string (UUID)
+    - `title`: string
+    - `text`: string
+    - `image`: string (nullable)
+    - `views`: number (default: 0)
+    - `createdAt`: Date
+    - `updatedAt`: Date
+    - `user_id`: string (foreign key, связывает с пользователем)
 
 ### Search & Filtering Context  
 - `SearchQuery` (Value Object)  
