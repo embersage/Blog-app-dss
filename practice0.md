@@ -53,20 +53,23 @@
 
 ### Authentication Context  
 - `User` (Сущность)  
-  - `id: UUID`  
-  - `email: string`  
-  - `password: hashed string`  
+  - `id`: string (UUID)
+  - `name`: string
+  - `email`: string (unique)
+  - `passwordHash`: string
+  - `createdAt`: Date
+  - `updatedAt`: Date  
 
 ### ArticlePost Management Context  
 - `Post` (Сущность)  
   - `id`: string (UUID)
-    - `title`: string
-    - `text`: string
-    - `image`: string (nullable)
-    - `views`: number (default: 0)
-    - `createdAt`: Date
-    - `updatedAt`: Date
-    - `user_id`: string (foreign key, связывает с пользователем)
+  - `title`: string
+  - `text`: string
+  - `image`: string (nullable)
+  - `views`: number (default: 0)
+  - `createdAt`: Date
+  - `updatedAt`: Date
+  - `user_id`: string (foreign key, связывает с пользователем)
 
 ### Search & Filtering Context  
 - `SearchQuery` (Value Object)  
