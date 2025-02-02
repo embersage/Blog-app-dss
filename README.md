@@ -92,13 +92,11 @@
 
 ## Сервисы предметной области (Domain Services)  
 - `AuthenticationService` (управляет входом, регистрацией).  
-- `BlogService` (CRUD для блогов).  
 - `ArticleService` (CRUD для статей и медиафайлов).  
 - `AnalyticsService` (расчет статистики).  
 - `SearchService` (поиск и фильтрация).  
 
 ## Репозитории (Repositories)  
-- `UserRepository` (хранение пользователей).  
-- `BlogRepository` (хранение блогов).  
+- `UserRepository` (хранение пользователей).   
 - `ArticleRepository` (хранение статей).  
 - `ArticleStatsRepository` (хранение статистики).  
