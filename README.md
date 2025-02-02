@@ -77,14 +77,6 @@
   - `url: string`  
   - `type: enum (IMAGE, VIDEO)`  
 
-### Analytics Context  
-- `ArticleStats` (Сущность)  
-  - `articleId: UUID`  
-  - `views: int`  
-  - `likes: int`  
-  - `dislikes: int`  
-  - `commentsCount: int`  
-
 ### Search & Filtering Context  
 - `SearchQuery` (Value Object)  
   - `query: string`  
