@@ -80,20 +80,18 @@
   - `sortBy: enum (DATE, POPULARITY)`  
 
 ## Агрегаты 
-- `Blog` (Агрегат) управляет `Article`.  
-- `Article` (Агрегат) управляет `Media`.  
-- `ArticleStats` (Агрегат) содержит метрики статьи.  
+- `Authentication Aggregate`: регистрация и вход пользователя.
+- `Post Aggregate`: создание, редактирование, удаление постов, добавление медиа.
+- `Search & Filtering Aggregate`: поиск и сортировка постов по дате или популярности. 
 
 ## Сервисы предметной области (Domain Services)  
 - `AuthenticationService` (управляет входом, регистрацией).  
-- `ArticleService` (CRUD для статей и медиафайлов).  
-- `AnalyticsService` (расчет статистики).  
+- `PostService` (CRUD для постов и медиафайлов).  
 - `SearchService` (поиск и фильтрация).  
 
 ## Репозитории (Repositories)  
 - `UserRepository` (хранение пользователей).   
-- `ArticleRepository` (хранение статей).  
-- `ArticleStatsRepository` (хранение статистики).
+- `PostRepository` (хранение статей).  
 
 # Инструментарий  
 
