@@ -116,3 +116,29 @@
 - **Styled Components**  
 - **Axios**  
 
+### Модель данных для проекта
+
+#### 1. На уровне приложения:
+- **TypeORM** для работы с объектами и реляционной базой данных.
+- Сервисы для CRUD операций: **AuthenticationService**, **BlogService**, **ArticleService**.
+- **Redux Toolkit** для управления состоянием на клиенте.
+
+#### 2. На уровне хранения данных:
+- **PostgreSQL** для хранения данных:
+  - **users**: 
+    - `id`: string (UUID)
+    - `name`: string
+    - `email`: string (unique)
+    - `passwordHash`: string
+    - `createdAt`: Date
+    - `updatedAt`: Date
+
+  - **posts**: 
+    - `id`: string (UUID)
+    - `title`: string
+    - `text`: string
+    - `image`: string (nullable)
+    - `views`: number (default: 0)
+    - `createdAt`: Date
+    - `updatedAt`: Date
+    - `user_id`: string (foreign key, связывает с пользователем)
