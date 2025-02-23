@@ -9,7 +9,7 @@ app.use('/api', router);
 AppDataSource.initialize();
 
 const TOKEN =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVjNjNjN2EyLWY1ZGYtNGZjNy1hMDc0LWNlZWM2MmY1YTczYSIsImlhdCI6MTczODUwNTMwMSwiZXhwIjoxNzM4NTkxNzAxfQ.blnwEP6OrNJELqUAgzcb-GohntZBG2a9qfPnivBj3dQ';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU2ZDNjZGUyLTJmMjItNDI0MS05ODcwLWI0NzZiMWQ0YWEwZiIsImlhdCI6MTc0MDMzNDg4NiwiZXhwIjoxNzQwNDIxMjg2fQ.nBjSc7YoO2zUXeYFVNrPsD8bBsJMoQUyslDRF8YXnOE';
 
 describe('POST /api/posts', () => {
   it('should create a post', async () => {
