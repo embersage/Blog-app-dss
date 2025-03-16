@@ -1,11 +1,45 @@
+version: '3'
+
 services:
-  server:
+  client:
     build:
-      context: ./server
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - '8001:3000'
+    environment:
+      REACT_APP_API_URL: http://localhost:8002
+    depends_on:
+      - gateway
+    restart: always
+    networks:
+      - NETWORK
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
     ports:
       - '8002:5000'
     environment:
       PORT: 5000
+      USERS_URL: http://user-service:5001/api/users
+      POSTS_URL: http://post-service:5002/api/posts
+    depends_on:
+      - user-service
+      - post-service
+    restart: always
+    networks:
+      - NETWORK
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - '8003:5001'
+    environment:
+      PORT: 5001
       DB_HOST: postgres
       DB_PORT: 5432
       DB_USER: postgres
@@ -13,21 +47,48 @@ services:
       DB_NAME: blog_db
       SECRET_KEY: Javascript is awesome
     depends_on:
-    - postgres
+      - postgres
     restart: always
+    networks:
+      - NETWORK
+
+  post-service:
+    build:
+      context: ./post-service
+      dockerfile: Dockerfile
+    ports:
+      - '8004:5002'
+    environment:
+      PORT: 5002
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: root
+      DB_NAME: blog_db
+      SECRET_KEY: Javascript is awesome
+    depends_on:
+      - postgres
+    restart: always
+    networks:
+      - NETWORK
 
   postgres:
     image: postgres:latest
     environment:
       PGDATA: /var/lib/postgresql/data
-      POSTGRES USER: postgres
-      POSTGRES PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
       POSTGRES_DB: blog_db
     ports:
-      - '8003:5432'
+      - '8005:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: always
+    networks:
+      - NETWORK
 
 volumes:
   pgdata:
+
+networks:
+  NETWORK:
