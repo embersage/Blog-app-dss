@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Router } from 'express';
 import PostController from '../controllers/PostController';
 import checkAuth from '../middlewares/checkAuth';

@@ -29,3 +29,28 @@ jobs:
           cd ../user-service && npm run lint
           cd ../post-service && npm run lint
           cd ../client && npm run lint
+
+  static-analysis:
+    name: Static Analysis
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd gateway && npm install
+          cd ../user-service && npm install
+          cd ../post-service && npm install
+
+      - name: Run TypeScript type checking
+        run: |
+          cd gateway && npm run type-check
+          cd ../user-service && npm run type-check
+          cd ../post-service && npm run type-check
+          cd ../client && npm run type-check

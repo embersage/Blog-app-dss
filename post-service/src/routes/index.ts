@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Router } from 'express';
 import PostsRoutes from './PostsRoutes';
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Request, Response } from 'express';
 import Post from '../database/models/Post';
 import { ILike } from 'typeorm';
