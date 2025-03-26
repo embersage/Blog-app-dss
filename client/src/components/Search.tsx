@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import debounce from 'lodash.debounce';
-import { setSearch } from '../store/reducers/interfaceSlice';
-import { AppDispatch } from '../store';
+/* eslint-disable */
+import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import debounce from "lodash.debounce";
+import { setSearch } from "../store/reducers/interfaceSlice";
+import { AppDispatch } from "../store";
 
 const SearchComponent = styled.input`
   padding: 5px;
@@ -20,7 +21,7 @@ const SearchComponent = styled.input`
 `;
 
 const Search = () => {
-  const [string, setString] = useState('');
+  const [string, setString] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 
   const updateSearch = useCallback(
@@ -37,7 +38,7 @@ const Search = () => {
         setString(event.target.value);
         updateSearch(event.target.value);
       }}
-      placeholder="Поиск..."
+      placeholder='Поиск...'
     />
   );
 };

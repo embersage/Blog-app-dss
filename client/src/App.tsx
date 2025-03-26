@@ -1,13 +1,13 @@
-import { Route, Routes } from 'react-router-dom';
-import styled from 'styled-components';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import 'normalize.css';
-import { AppDispatch, RootState } from './store';
-import Home from './pages/Home';
-import Header from './components/Header';
-import './main.css';
-import { checkAuthorization } from './store/reducers/userSlice';
+import { Route, Routes } from "react-router-dom";
+import styled from "styled-components";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import "normalize.css";
+import { AppDispatch } from "./store";
+import Home from "./pages/Home";
+import Header from "./components/Header";
+import "./main.css";
+import { checkAuthorization } from "./store/reducers/userSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,13 +21,13 @@ function App() {
 
   useEffect(() => {
     dispatch(checkAuthorization());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Wrapper>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path='/' element={<Home />}></Route>
       </Routes>
     </Wrapper>
   );

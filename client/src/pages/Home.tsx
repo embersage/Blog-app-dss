@@ -4,14 +4,13 @@ import {
   useState,
   MouseEvent,
   useRef,
-  FormEvent,
   ChangeEvent,
-} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import ContentLoader from 'react-content-loader';
-import { AppDispatch, RootState } from '../store';
-import { login, register } from '../store/reducers/userSlice';
+} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import ContentLoader from "react-content-loader";
+import { AppDispatch, RootState } from "../store";
+import { login, register } from "../store/reducers/userSlice";
 import {
   createPost,
   editPost,
@@ -20,14 +19,14 @@ import {
   fetchPosts,
   setPost,
   uploadImage,
-} from '../store/reducers/postsSlice';
-import PostBlock from '../components/PostBlock';
-import IPost from '../models/IPost';
-import ModalWindow from '../components/ModalWindow';
+} from "../store/reducers/postsSlice";
+import PostBlock from "../components/PostBlock";
+import IPost from "../models/IPost";
+import ModalWindow from "../components/ModalWindow";
 import {
   setIsOpenedModalWindow,
   setPressedButton,
-} from '../store/reducers/interfaceSlice';
+} from "../store/reducers/interfaceSlice";
 
 const ContentWrapper = styled.main`
   padding: 0 15px;
@@ -163,14 +162,14 @@ const Home: FC = () => {
     (state: RootState) => state.interfaceReducer.pressedButton
   );
   const order = useSelector((state: RootState) => state.interfaceReducer.order);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [id, setId] = useState('');
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [image, setImage] = useState('');
-  const [modalContent, setModalContent] = useState('authorization');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [id, setId] = useState("");
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
+  const [image, setImage] = useState("");
+  const [modalContent, setModalContent] = useState("authorization");
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingFullArticle, setIsLoadingFullArticle] = useState(true);
   const largePostRef = useRef<HTMLDivElement | null>(null);
@@ -194,45 +193,45 @@ const Home: FC = () => {
       }
     };
 
-    document.body.addEventListener('click', handleClickOutside);
+    document.body.addEventListener("click", handleClickOutside);
 
     return () => {
-      document.body.removeEventListener('click', handleClickOutside);
+      document.body.removeEventListener("click", handleClickOutside);
     };
-  }, [search, order]);
+  }, [search, order, dispatch]);
 
   const authClickHandler = async (event: MouseEvent) => {
     event.preventDefault();
-    if (modalContent === 'authorization') {
+    if (modalContent === "authorization") {
       const response = await dispatch(login({ email, password }));
       if (!response.payload) {
-        return alert('Не удалось авторизоваться.');
+        return alert("Не удалось авторизоваться.");
       }
-      if ('token' in response.payload) {
-        localStorage.setItem('token', response.payload.token);
+      if ("token" in response.payload) {
+        localStorage.setItem("token", response.payload.token);
       }
     } else if (name.length > 0 && email.length > 0 && password.length > 0) {
       const response = await dispatch(register({ name, email, password }));
       if (!response.payload) {
-        return alert('Не удалось зарегистрироваться.');
+        return alert("Не удалось зарегистрироваться.");
       }
-      if ('token' in response.payload) {
-        localStorage.setItem('token', response.payload.token);
+      if ("token" in response.payload) {
+        localStorage.setItem("token", response.payload.token);
       }
     }
 
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem("token")) {
       dispatch(setIsOpenedModalWindow(false));
-      setName('');
-      setEmail('');
-      setPassword('');
+      setName("");
+      setEmail("");
+      setPassword("");
     }
   };
 
   const createPostClickHandler = async (event: MouseEvent) => {
     event.preventDefault();
     if (title.length > 0 && text.length > 0) {
-      if (pressedButton === 'articleCreation') {
+      if (pressedButton === "articleCreation") {
         await dispatch(createPost({ title, text, image }));
       } else {
         await dispatch(editPost({ id, title, text, image }));
@@ -241,10 +240,10 @@ const Home: FC = () => {
 
       await dispatch(fetchPosts({ search, order }));
       dispatch(setIsOpenedModalWindow(false));
-      setTitle('');
-      setText('');
-      setImage('');
-      setPassword('');
+      setTitle("");
+      setText("");
+      setImage("");
+      setPassword("");
     }
   };
 
@@ -270,7 +269,7 @@ const Home: FC = () => {
                     }}
                     onEditHandler={async () => {
                       await dispatch(setIsOpenedModalWindow(true));
-                      await dispatch(setPressedButton('articleEditing'));
+                      await dispatch(setPressedButton("articleEditing"));
                       setId(item.id);
                       setTitle(item.title);
                       setText(item.text);
@@ -285,17 +284,17 @@ const Home: FC = () => {
                     speed={2}
                     width={500}
                     height={330}
-                    viewBox="0 0 500 330"
-                    backgroundColor="#f3f3f3"
-                    foregroundColor="#ecebeb"
+                    viewBox='0 0 500 330'
+                    backgroundColor='#f3f3f3'
+                    foregroundColor='#ecebeb'
                   >
                     <rect
-                      x="0"
-                      y="0"
-                      rx="20"
-                      ry="20"
-                      width="500"
-                      height="330"
+                      x='0'
+                      y='0'
+                      rx='20'
+                      ry='20'
+                      width='500'
+                      height='330'
                     />
                   </ContentLoader>
                 );
@@ -310,11 +309,11 @@ const Home: FC = () => {
                 speed={2}
                 width={600}
                 height={550}
-                viewBox="0 0 600 550"
-                backgroundColor="#f3f3f3"
-                foregroundColor="#ecebeb"
+                viewBox='0 0 600 550'
+                backgroundColor='#f3f3f3'
+                foregroundColor='#ecebeb'
               >
-                <rect x="0" y="0" rx="20" ry="20" width="600" height="550" />
+                <rect x='0' y='0' rx='20' ry='20' width='600' height='550' />
               </ContentLoader>
             )}
           </FullArticle>
@@ -322,12 +321,12 @@ const Home: FC = () => {
       </ContentWrapper>
       {isOpenedModalWindow && (
         <ModalWindow>
-          {pressedButton === 'login' && (
+          {pressedButton === "login" && (
             <FormWrapper>
               <h2>
-                {modalContent === 'authorization' ? 'Вход' : 'Регистрация'}
+                {modalContent === "authorization" ? "Вход" : "Регистрация"}
               </h2>
-              {modalContent === 'registration' && (
+              {modalContent === "registration" && (
                 <label>
                   <span>Имя:</span>
                   <input
@@ -335,7 +334,7 @@ const Home: FC = () => {
                     onChange={(event) => {
                       setName(event.target.value);
                     }}
-                    type="text"
+                    type='text'
                   />
                 </label>
               )}
@@ -346,7 +345,7 @@ const Home: FC = () => {
                   onChange={(event) => {
                     setEmail(event.target.value);
                   }}
-                  type="email"
+                  type='email'
                 />
               </label>
               <label>
@@ -356,38 +355,38 @@ const Home: FC = () => {
                   onChange={(event) => {
                     setPassword(event.target.value);
                   }}
-                  type="password"
+                  type='password'
                 />
               </label>
               <button
-                type="submit"
+                type='submit'
                 onClick={(event: MouseEvent) => authClickHandler(event)}
               >
-                {modalContent === 'authorization'
-                  ? 'Войти'
-                  : 'Зарегистрироваться'}
+                {modalContent === "authorization"
+                  ? "Войти"
+                  : "Зарегистрироваться"}
               </button>
               <SwitchButton
                 onClick={(event) => {
                   event.preventDefault();
-                  modalContent === 'authorization'
-                    ? setModalContent('registration')
-                    : setModalContent('authorization');
+                  modalContent === "authorization"
+                    ? setModalContent("registration")
+                    : setModalContent("authorization");
                 }}
               >
-                {modalContent === 'authorization'
-                  ? 'Нет аккаунта? Зарегистрируйтесь!'
-                  : 'Уже есть аккаунт? Авторизуйтесь!'}
+                {modalContent === "authorization"
+                  ? "Нет аккаунта? Зарегистрируйтесь!"
+                  : "Уже есть аккаунт? Авторизуйтесь!"}
               </SwitchButton>
             </FormWrapper>
           )}
-          {(pressedButton === 'articleCreation' ||
-            pressedButton === 'articleEditing') && (
+          {(pressedButton === "articleCreation" ||
+            pressedButton === "articleEditing") && (
             <FormWrapper>
               <h2>
-                {pressedButton === 'articleCreation'
-                  ? 'Создание записи'
-                  : 'Редактирование записи'}
+                {pressedButton === "articleCreation"
+                  ? "Создание записи"
+                  : "Редактирование записи"}
               </h2>
               <TextWrapper>
                 <span>Название:</span>
@@ -396,7 +395,7 @@ const Home: FC = () => {
                   onChange={(event) => {
                     setTitle(event.target.value);
                   }}
-                  type="text"
+                  type='text'
                 />
               </TextWrapper>
               <TextWrapper>
@@ -410,11 +409,11 @@ const Home: FC = () => {
               </TextWrapper>
               <TextWrapper>
                 <input
-                  type="file"
+                  type='file'
                   onChange={async (event: ChangeEvent<HTMLInputElement>) => {
                     if (event.target.files) {
                       const formData = new FormData();
-                      formData.append('image', event.target.files[0]);
+                      formData.append("image", event.target.files[0]);
                       const response = await dispatch(uploadImage(formData));
                       setImage(response.payload.url);
                     }
@@ -422,12 +421,12 @@ const Home: FC = () => {
                 />
               </TextWrapper>
               <button
-                type="submit"
+                type='submit'
                 onClick={(event: MouseEvent) => createPostClickHandler(event)}
               >
-                {pressedButton === 'articleCreation'
-                  ? 'Опубликовать'
-                  : 'Изменить'}
+                {pressedButton === "articleCreation"
+                  ? "Опубликовать"
+                  : "Изменить"}
               </button>
             </FormWrapper>
           )}

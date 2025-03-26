@@ -1,0 +1,31 @@
+name: CI Pipeline
+
+on:
+  push: {}
+  pull_request: {}
+
+jobs:
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd gateway && npm install
+          cd ../user-service && npm install
+          cd ../post-service && npm install
+          cd ../client && npm install
+
+      - name: Run ESLint
+        run: |
+          cd gateway && npm run lint
+          cd ../user-service && npm run lint
+          cd ../post-service && npm run lint
+          cd ../client && npm run lint
