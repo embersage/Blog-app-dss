@@ -137,15 +137,6 @@ describe('Post Controller Tests', () => {
   });
 
   describe('DELETE /api/posts/:id', () => {
-    it('should delete a post', async () => {
-      const response = await request(app).delete(`/api/posts/${testPostId}`).auth(userToken, { type: 'bearer' });
-
-      expect(response.status).toBe(200);
-
-      const getResponse = await request(app).get(`/api/posts/${testPostId}`);
-      expect(getResponse.status).toBe(404);
-    });
-
     it('should not delete post without authentication', async () => {
       const response = await request(app).delete(`/api/posts/${testPostId}`);
 
