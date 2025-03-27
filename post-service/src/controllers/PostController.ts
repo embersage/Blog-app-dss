@@ -4,6 +4,7 @@ import Post from '../database/models/Post';
 import { ILike } from 'typeorm';
 import AppDataSource from '../database/connection';
 import User from '../database/models/User';
+import logger from '../utils/logger';
 
 class PostController {
   static async getAll(req: Request, res: Response) {
@@ -66,6 +67,12 @@ class PostController {
       const userId = req.userId;
       const { title, text, image } = req.body;
 
+      logger.info('Creating new post', {
+        userId,
+        service: 'post-service',
+        action: 'create_post',
+      });
+
       const postRepository = AppDataSource.getRepository(Post);
       const userRepository = AppDataSource.getRepository(User);
 
@@ -74,9 +81,20 @@ class PostController {
         const post = postRepository.create({ title, text, image, user });
         const createdPost = await AppDataSource.getRepository(Post).save(post);
 
+        logger.info('Post created successfully', {
+          postId: createdPost.id,
+          userId,
+          service: 'post-service',
+        });
+
         return res.status(201).json(createdPost);
       }
     } catch (error) {
+      logger.error('Post creation error', {
+        error: error.message,
+        userId: req.userId,
+        service: 'post-service',
+      });
       return res.status(500).json({ message: 'Ошибка при создании ресурса.' });
     }
   }
