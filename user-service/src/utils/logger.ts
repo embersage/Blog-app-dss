@@ -1,27 +1,28 @@
 /* eslint-disable */
 // @ts-nocheck
-import { Gelf } from 'gelf-pro';
+import gelf from 'gelf-pro';
 import os from 'os';
 
-const logger = new Gelf({
-  adapterName: 'udp',
+// Configure the logger
+gelf.setConfig({
+  fields: {
+    facility: process.env.SERVICE_NAME || 'unknown-service',
+    host: os.hostname(),
+    environment: process.env.NODE_ENV || 'development'
+  },
   adapterOptions: {
-    host: 'localhost',
+    host: process.env.GRAYLOG_HOST || 'localhost',
     port: 12201,
   },
-  fields: {
-    facility:  'unknown-service',
-    host: os.hostname(),
-    environment: 'development'
-  },
+  adapterName: 'udp'
 });
 
 export const logInfo = (message: string, additionalData = {}) => {
-  logger.info(message, additionalData);
+  gelf.info(message, additionalData);
 };
 
 export const logError = (message: string, error: any, additionalData = {}) => {
-  logger.error(message, {
+  gelf.error(message, {
     ...additionalData,
     error: error.message,
     stack: error.stack
@@ -29,7 +30,7 @@ export const logError = (message: string, error: any, additionalData = {}) => {
 };
 
 export const logWarn = (message: string, additionalData = {}) => {
-  logger.warn(message, additionalData);
+  gelf.warn(message, additionalData);
 };
 
-export default logger;
+export default gelf;
