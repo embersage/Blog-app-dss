@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { config } from 'dotenv';
 import User from '../database/models/User';
 import AppDataSource from '../database/connection';
-import { logInfo, logError, logWarn } from '../../../shared/logger';
+import { logInfo, logError, logWarn } from '../utils/logger';
 
 config();
 

@@ -4,7 +4,7 @@ import Post from '../database/models/Post';
 import { ILike } from 'typeorm';
 import AppDataSource from '../database/connection';
 import User from '../database/models/User';
-import logger from '../utils/logger';
+import logger from '../../../user-service/src/utils/logger';
 
 class PostController {
   static async getAll(req: Request, res: Response) {
