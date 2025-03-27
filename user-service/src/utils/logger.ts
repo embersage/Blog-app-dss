@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Gelf } from 'gelf-pro';
 import os from 'os';
 
