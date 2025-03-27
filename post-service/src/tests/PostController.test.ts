@@ -3,7 +3,6 @@ import request from 'supertest';
 import express from 'express';
 import router from '../routes/index';
 import AppDataSource from '../database/connection';
-import { DataSource } from 'typeorm';
 import User from '../database/models/User';
 import jwt from 'jsonwebtoken';
 
