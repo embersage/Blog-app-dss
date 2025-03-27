@@ -55,3 +55,58 @@ jobs:
           cd ../user-service && npm run type-check
           cd ../post-service && npm run type-check
           cd ../client && npm run type-check
+
+  test:
+    name: Running Tests
+    needs: static-analysis
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: blog_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd user-service && npm install
+          cd ../post-service && npm install
+
+      - name: Create env files
+        run: |
+          cd user-service
+          echo "DB_HOST=localhost" > .env
+          echo "DB_PORT=5432" >> .env
+          echo "DB_USER=postgres" >> .env
+          echo "DB_PASSWORD=root" >> .env
+          echo "DB_NAME=blog_db" >> .env
+          echo "SECRET_KEY=test_secret_key" >> .env
+          cd ../post-service
+          echo "DB_HOST=localhost" > .env
+          echo "DB_PORT=5432" >> .env
+          echo "DB_USER=postgres" >> .env
+          echo "DB_PASSWORD=root" >> .env
+          echo "DB_NAME=blog_db" >> .env
+          echo "SECRET_KEY=test_secret_key" >> .env
+
+      - name: Run tests
+        run: |
+          cd user-service && npm test
+          cd ../post-service && npm test
