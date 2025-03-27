@@ -18,6 +18,7 @@ describe('User Controller Tests', () => {
 
   afterAll(async () => {
     await AppDataSource.destroy();
+  });
 
   describe('POST /api/users/register', () => {
     it('should register a new user', async () => {
@@ -56,7 +57,6 @@ describe('User Controller Tests', () => {
         .post('/api/users/register')
         .send({
           name: 'Test User'
-          // missing email and password
         });
 
       expect(response.status).toBe(500);
@@ -132,5 +132,4 @@ describe('User Controller Tests', () => {
       expect(response.body).toHaveProperty('message', 'Пользователь не авторизован.');
     });
   });
-});
 });
