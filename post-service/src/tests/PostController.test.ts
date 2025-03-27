@@ -3,6 +3,9 @@ import request from 'supertest';
 import express from 'express';
 import router from '../routes/index';
 import AppDataSource from '../database/connection';
+import { DataSource } from 'typeorm';
+import User from '../database/models/User';
+import jwt from 'jsonwebtoken';
 
 const app = express();
 app.use(express.json());
@@ -11,24 +14,27 @@ app.use('/api', router);
 describe('Post Controller Tests', () => {
   let userToken: string;
   let testPostId: string;
+  let testUser: User;
 
   beforeAll(async () => {
     await AppDataSource.initialize();
 
-    // Create test user
-    const registerResponse = await request(app)
-      .post('/api/users/register')
-      .send({
-        name: 'Test User',
-        email: `test${Date.now()}@example.com`,
-        password: 'password123',
-      });
+    const userRepository = AppDataSource.getRepository(User);
+    testUser = userRepository.create({
+      name: 'Test User',
+      email: `test${Date.now()}@example.com`,
+      passwordHash: 'hashedpassword123',
+    });
+    await userRepository.save(testUser);
 
-    expect(registerResponse.status).toBe(200);
-    userToken = registerResponse.body.token;
+    userToken = jwt.sign({ id: testUser.id }, process.env.SECRET_KEY || 'test_secret_key', { expiresIn: '24h' });
   });
 
   afterAll(async () => {
+    if (testUser) {
+      const userRepository = AppDataSource.getRepository(User);
+      await userRepository.delete(testUser.id);
+    }
     await AppDataSource.destroy();
   });
 
@@ -44,7 +50,7 @@ describe('Post Controller Tests', () => {
       expect(response.body).toHaveProperty('text', 'This is a test post content');
       expect(response.body).toHaveProperty('id');
 
-      testPostId = response.body.id; // Save post ID for later tests
+      testPostId = response.body.id;
     });
 
     it('should not create a post without authentication', async () => {
@@ -137,7 +143,6 @@ describe('Post Controller Tests', () => {
 
       expect(response.status).toBe(200);
 
-      // Verify post was deleted
       const getResponse = await request(app).get(`/api/posts/${testPostId}`);
       expect(getResponse.status).toBe(404);
     });
